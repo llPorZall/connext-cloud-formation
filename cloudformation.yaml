@@ -155,7 +155,7 @@ Resources:
           Value: !Sub '${AWS::StackName} Private Subnet (AZ1)'
 
   
-  # Remote Instance
+  # Remote Instance and security group
   RemoteSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -208,7 +208,7 @@ Resources:
         - Key: Name
           Value: 'remote-server'
 
-  # Router Instance
+  # Router Instance and security group
   RouterSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
