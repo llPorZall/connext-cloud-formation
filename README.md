@@ -39,11 +39,12 @@
 ## Monitory and Alarm
 Go to cloudwatch dashboard for monitor your router server.
 ![enter image description here](https://user-images.githubusercontent.com/5087734/170767422-7f047050-83b0-498b-bdfb-454dd77f660b.png)
-If your server have any issue system will send email alert to your email automatically.
+If your server have any issue.System will send email alert to your email automatically.
 ![enter image description here](https://user-images.githubusercontent.com/5087734/170767509-c885b53c-1fe9-4de0-ab9c-14b4ceb81979.png)
 
  
-Hope your enjoy to provision Connext router and don't forget to add liquidity and keep bridge. 
+Hope your enjoy to provision Connext router and don't forget to add liquidity, keep bridge. 
+
 See you next time.
 
  **Autor**
