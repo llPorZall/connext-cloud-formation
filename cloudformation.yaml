@@ -5,8 +5,18 @@ Description: Connext router infrastructure
 Parameters:
   KeyName:
     Type: "AWS::EC2::KeyPair::KeyName"
-    Default: YOUR KEY PAIR
+    Default: connext_testnet
     Description: The EC2 Key Pair to allow SSH access to the instances
+
+  Email:
+    Type: String
+    Default: pongchai.droiddev@gmail.com
+    Description: Email for receive SNS alarm
+
+  PrivateKey:
+    Type: String
+    Default: YOURPRIVATEKEY
+    Description: Private key for router server
 
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
@@ -265,29 +275,11 @@ Resources:
       Tags:
         - Key: Name
           Value: "router-server"
-      UserData: !Base64 |
-        #!/bin/bash
-        sudo apt update && apt install git
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sudo sh get-docker.sh
-        curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-        cd /home/ubuntu/
-        git clone https://github.com/connext/nxtp-router-docker-compose.git
-        cd /home/ubuntu/nxtp-router-docker-compose
-        git config --global --add safe.directory /home/ubuntu/nxtp-router-docker-compose
-        git checkout amarok
-
-        cp .env.example .env
-        sed -i 's/latest/0.2.0-beta.0/g' .env
-        cp config.example.json config.json
-        cp key.example.yaml key.yaml
-        sed -i 's/dkadkjasjdlkasdladadasda/YOUR PRIVATE KEY/g' key.yaml
-
-        docker-compose create
-        docker-compose up -d
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash
+            ${PlatformSelect}
 
   # Cloudwatch dashboard
   RouterDashboard:
@@ -494,3 +486,31 @@ Resources:
                 }',
               ],
             ] }
+  #Alarm system
+  SNSTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties: 
+      Subscription:
+        - Endpoint: !Ref Email
+          Protocol: "email"
+      TopicName: "connext-router-alarm"
+
+  RouterCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn: RouterInstance
+    Properties:
+      AlarmDescription: CPU alarm for router instance
+      AlarmActions: 
+        - Ref: "SNSTopic"
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      ActionsEnabled: true
+      Period: '60'
+      EvaluationPeriods: '3'
+      Threshold: '50'
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+      - Name: InstanceId
+        Value:
+          Ref: RouterInstance
