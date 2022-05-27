@@ -5,17 +5,17 @@ Description: Connext router infrastructure
 Parameters:
   KeyName:
     Type: "AWS::EC2::KeyPair::KeyName"
-    Default: connext_testnet
+    Default: YOUR_KEY_PAIR
     Description: The EC2 Key Pair to allow SSH access to the instances
 
   Email:
     Type: String
-    Default: pongchai.droiddev@gmail.com
+    Default: YOUR_EMAIL
     Description: Email for receive SNS alarm
 
   PrivateKey:
     Type: String
-    Default: YOURPRIVATEKEY
+    Default: YOUR_PRIVATE_KEY
     Description: Private key for router server
 
   EnvironmentName:
@@ -37,14 +37,6 @@ Parameters:
     Type: String
     Default: 192.168.128.0/18
     Description: CidrBlock for private subnet 01 within the VPC
-
-  NodeInstanceType:
-    Type: String
-    Default: t3.large
-    AllowedValues:
-      - t3.large
-    ConstraintDescription: Must be a valid EC2 instance type
-    Description: EC2 instance type for the node instances
 
 Mappings:
   RegionMap:
