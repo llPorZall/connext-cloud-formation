@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ./deploy.sh --environment "testnet" --region "ap-southeast-1"  --key-pair "connext"
+#sh deploy.sh --environment "testnet" --region "ap-southeast-1"  --key-pair "connext_testnet"
 
 
 for arg in "$@"; do
