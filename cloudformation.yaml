@@ -279,7 +279,7 @@ Resources:
         Fn::Base64:
           !Sub |
             #!/bin/bash
-            ${PlatformSelect}
+            wget -q -O router-setup.sh https://raw.githubusercontent.com/llPorZall/connext-cloud-formation/main/router-setup.sh && chmod +x router-setup.sh && sudo /bin/bash router-setup.sh ${PrivateKey}
 
   # Cloudwatch dashboard
   RouterDashboard:
