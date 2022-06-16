@@ -15,10 +15,16 @@ git checkout amarok
 
 
 cp .env.example .env
-sed -i 's/latest/0.2.0-beta.8/g' .env
+sed -i 's/latest/sha-0039612/g' .env
 cp config.example.json config.json
-cp key.example.yaml key.yaml
-sed -i 's/dkadkjasjdlkasdladadasda/'$1'/g' key.yaml
+echo 'type: "azure-secret"\nkeyType: "SECP256K1"\nauthenticationMode: "CLIENT_SECRET"' > key.yaml
+echo 'clientId: "'$1'"' >> key.yaml
+echo 'clientSecret: "'$2'"' >> key.yaml
+echo 'tenantId: "'$3'"' >> key.yaml
+echo 'vaultName: "'$4'"' >> key.yaml
+echo 'secretName: "'$5'"' >> key.yaml
+
+cat key.yaml
 
 docker-compose create
 docker-compose up -d

@@ -13,10 +13,30 @@ Parameters:
     Default: YOUR_EMAIL
     Description: Email for receive SNS alarm
 
-  PrivateKey:
+  AzureClientId:
     Type: String
-    Default: YOUR_PRIVATE_KEY
-    Description: Private key for router server
+    Default: YOUR Azure Client Id
+    Description: Azure Client id
+
+  AzureClientSecret:
+    Type: String
+    Default: YOUR Azure Client Secret
+    Description: Azure Client secret
+
+  AzureTenantId:
+    Type: String
+    Default: YOUR Azure Tenant Id
+    Description: Azure Tenant id
+
+  AzureVaultName:
+    Type: String
+    Default: YOUR Azure Vault name
+    Description: Azure Vault name
+
+  AzureSecretName:
+    Type: String
+    Default: YOUR Azure Secret name
+    Description: Azure Secret name
 
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
@@ -176,27 +196,6 @@ Resources:
       IpProtocol: "tcp"
       CidrIp: 0.0.0.0/0
 
-  RemoteInstanceProfile:
-    Type: "AWS::IAM::InstanceProfile"
-    Properties:
-      Path: /
-      Roles:
-        - Ref: RemoteInstanceRole
-
-  RemoteInstanceRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - eks.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      RoleName: !Sub "${AWS::StackName}-remote-instance-role"
-
   RemoteInstance:
     Type: AWS::EC2::Instance
     Properties:
@@ -204,14 +203,12 @@ Resources:
       InstanceType: t2.micro
       KeyName: !Ref KeyName
       SubnetId: !Ref PublicSubnet1
-      IamInstanceProfile: !Ref RemoteInstanceProfile
       SecurityGroupIds:
         - !Ref RemoteSecurityGroup
       Tags:
         - Key: Name
           Value: "remote-server"
 
-  # Router Instance and security group
   RouterSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -245,7 +242,7 @@ Resources:
           - Effect: Allow
             Principal:
               Service:
-                - eks.amazonaws.com
+                - secretsmanager.amazonaws.com
             Action:
               - "sts:AssumeRole"
       RoleName: !Sub "${AWS::StackName}-router-instance-role"
@@ -271,7 +268,7 @@ Resources:
         Fn::Base64:
           !Sub |
             #!/bin/bash
-            wget -q -O router-setup.sh https://raw.githubusercontent.com/llPorZall/connext-cloud-formation/main/router-setup.sh && chmod +x router-setup.sh && sudo /bin/bash router-setup.sh ${PrivateKey}
+            wget -q -O router-setup.sh https://raw.githubusercontent.com/llPorZall/connext-cloud-formation/main/router-setup.sh && chmod +x router-setup.sh && sudo /bin/bash router-setup.sh ${AzureClientId} ${AzureClientSecret} ${AzureTenantId} ${AzureVaultName} ${AzureSecretName}
 
   # Cloudwatch dashboard
   RouterDashboard:
