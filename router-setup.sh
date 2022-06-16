@@ -17,7 +17,9 @@ git checkout amarok
 cp .env.example .env
 sed -i 's/latest/sha-0039612/g' .env
 cp config.example.json config.json
-echo 'type: "azure-secret"\nkeyType: "SECP256K1"\nauthenticationMode: "CLIENT_SECRET"' > key.yaml
+echo 'type: "azure-secret"' > key.yaml
+echo 'keyType: "SECP256K1"' >> key.yaml
+echo 'authenticationMode: "CLIENT_SECRET"' >> key.yaml
 echo 'clientId: "'$1'"' >> key.yaml
 echo 'clientSecret: "'$2'"' >> key.yaml
 echo 'tenantId: "'$3'"' >> key.yaml
