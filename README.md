@@ -31,9 +31,9 @@
 	 - [ ] Azure Vault Name, Your azure vault name.
 	 - [ ] Azure Secret Name, Your azure secret name.
  
- *Guideline to get azure information please see from my tutorial (Link: TBA)
+ *Guideline to get azure information please see from my tutorial https://youtu.be/PWRHAQ450aI
 
- 4. Go to cloudformation menu.(https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/) Create a new stack and select upload a template file with your "cloudformation.yaml" and then fill your stack name. (Wait for 5 mins everything will come up for you)
+ 4. Go to cloudformation menu.(https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/) Create a new stack and select upload a template file with your "cloudformation.yaml" and then fill your stack name, your email , azure configuration etc. (Wait for 5 mins everything will come up for you)
  ![enter image description here](https://user-images.githubusercontent.com/5087734/170765560-6367d335-a491-49c1-b0e4-7947f2ff39f6.png)
  5. Go to your email and Confirm subscription email from SNS alarm system.
  ![enter image description here](https://user-images.githubusercontent.com/5087734/170765568-07340c50-3497-4fba-8313-b9f6232bb498.png)
