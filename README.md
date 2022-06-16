@@ -15,6 +15,7 @@
  - Automatic to provision security group. (Firewall)
  - Automatic to create monitoring dashboard. (Cloudwatch Dashboard)
  - Support alarm system. (AWS SNS via email)
+ - Support Azure secret for protect your private key.
 
 ## Guideline
 
@@ -24,7 +25,12 @@
 	 - [ ] KeyName, Input your key-pair name. 
 	 - [ ] Email, Your email for receiving an email alert.
 	 - [ ] PrivateKey, Your private key wallet. (You can get them from Metamask wallet)
-	 ![enter image description here](https://user-images.githubusercontent.com/5087734/170765553-bac4e72f-51d9-4228-b87d-2d1df2a5d1b3.png)
+	 - [ ] Azure Client Id, Your azure client id.
+	 - [ ] Azure Client Secret, Your azure secret.
+	 - [ ] Azure Tenant Id, Your azure tenant id.
+	 - [ ] Azure Vault Name, Your azure vault name.
+	 - [ ] Azure Secret Name, Your azure secret name.
+ Guideline to get azure information please see from my tutorial (Link: TBA)
  4. Go to cloudformation menu.(https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/) Create a new stack and select upload a template file with your "cloudformation.yaml" and then fill your stack name. (Wait for 5 mins everything will come up for you)
  ![enter image description here](https://user-images.githubusercontent.com/5087734/170765560-6367d335-a491-49c1-b0e4-7947f2ff39f6.png)
  5. Go to your email and Confirm subscription email from SNS alarm system.
